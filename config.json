@@ -1,0 +1,53 @@
+﻿{
+  "type": "network",
+  "version": "1.0",
+  "data": "data.json",
+  "logo": {
+    "text": "",
+    "file": "",
+    "link": ""
+  },
+  "text": {
+    "title": "MISKnowledgeMap (Beta)",
+    "more": "We analyzed the contents and references of all publications published in the eight IS journals included in the “Senior Scholars\u0027 Basket of Journals” from 2005 through the present (2014). Our collection contains 2427 articles. Links are generated based on LSI, Co-citatiation, and Bibliographic Coupling. \n </p><p>Authors: Mahdi Moqri (mahdi.moqri@warrington.uf.edu) and Dr. Subhajyoti Bandyopadhyay (shubho.bandyopadhyay@warrington.ufl.edu) ",
+    "intro": "Map of all publications in \"Senior Scholars\u0027 Basket of Journals\" (top 8 IS journals) from 2005 to 2014"
+  },
+  "legend": {
+    "edgeLabel": "each line connects two similar articles (similarities are measured using LSA and Citation Analysis)",
+    "colorLabel": "each group of article is colored differently (groups are identified using network modularity)",
+    "nodeLabel": "each node represents an article"
+  },
+  "features": {
+    "search": true,
+    "groupSelectorAttribute": "Group",
+    "hoverBehavior": "dim"
+  },
+  "informationPanel": {
+    "imageAttribute": false,
+    "groupByEdgeDirection": false
+  },
+  "sigma": {
+    "graphProperties": {
+      "minEdgeSize": 0.2,
+      "maxNodeSize": 7,
+      "maxEdgeSize": 0.5,
+      "minNodeSize": 1
+    },
+    "drawingProperties": {
+      "labelThreshold": 10,
+      "hoverFontStyle": "bold",
+      "defaultEdgeType": "curve",
+      "defaultLabelColor": "#000",
+      "defaultLabelHoverColor": "#fff",
+      "defaultLabelSize": 14,
+      "activeFontStyle": "bold",
+      "fontStyle": "bold",
+      "defaultHoverLabelBGColor": "#002147",
+      "defaultLabelBGColor": "#ddd"
+    },
+    "mouseProperties": {
+      "minRatio": 0.75,
+      "maxRatio": 20
+    }
+  }
+}
