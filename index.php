@@ -108,10 +108,22 @@
   <div class="nodeattributes">
     <div class="name"></div>
 	<div class="data"></div>
+	<div class="mydatabase">
+	  <?php
+	     echo "<h2> read from the database</h2>";
+	     include "includes/connection.php";
+	      $query="SELECT * FROM papers";
+	      $result=mysql_query($query);
+	
+	      while ($a=mysql_fetch_array($result)) {
+		       echo "<h3>", $a["table"],"</h3>";
+	       }
+      ?>
+    </div>
     <div class="p">Connections:</div>
     <div class="link">
-      <ul>
-      </ul>
+      <table>
+      </table>
     </div>
   </div>
 	</div>
