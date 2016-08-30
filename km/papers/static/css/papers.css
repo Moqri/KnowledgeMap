@@ -1,0 +1,30 @@
+.nav-tabs li a {font-size:18px;}
+
+.abstract {
+    font-family: Arial,sans-serif;
+	font-size: 120%;
+}
+.references {
+    font-family: Arial,sans-serif;
+	font-size: 120%;
+}
+
+#id_title_search {
+    width: 230;
+}
+
+#id_author_search {
+    width: 230;
+}
+
+.display a, .display a:hover {
+    color: #1a0dab;   
+}
+
+#outer {
+  position: relative;
+}
+#inner {
+  position: absolute;
+  top: 50%;
+  }

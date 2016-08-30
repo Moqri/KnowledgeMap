@@ -1,0 +1,264 @@
+{% load staticfiles %}
+<html>
+<head>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="{% static 'css/papers.css' %}">
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script> 
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.js"></script>
+<script type="text/javascript">
+//sort tables
+$(document).ready( function () {
+   $(window).trigger('setup');
+    $('#table_id').DataTable({
+	      "order": [[ 5, "desc" ]]
+	});
+	$('#table_id2').DataTable({
+	      "order": [[ 6, "desc" ]]   
+	});
+} );
+
+//hyperlink authors
+$(window).bind('setup', function() {
+	$('.authors').each(function(i, obj) {
+		authors=$(this).text().split(";");
+		authors_links = authors.map(function(author) {
+		  return ("<a href=\"/author/?author="+author.trim()+ "\" class=\"authors\">" + author.trim() +"</a>; ");
+		});
+		$(this).html(authors_links)
+	});
+});
+
+$(window).bind('setup', function() {
+	$('.keywords').each(function(i, obj) {
+		keywords=$(this).text().split(";");
+		if (keywords.length>0){
+		keywords=keywords.slice(0,3)
+		}
+		keywords_links = keywords.map(function(keyword) {
+		  return ("<a href=\"/keyword/?keyword="+keyword.trim()+ "\" class=\"keywords\">" + keyword.trim() +"</a>; ");
+		});
+		$(this).html(keywords_links)
+	});
+});
+
+function goBack() {
+    window.history.back();
+}
+</script>
+
+</head>
+<body>
+	<div class="content container">	
+		<div class='row'>
+			<div class='col-sm-4'>    
+				<h2><a href="/">Informations Systems</a></h2>
+			</div>
+			<div  class='col-sm-5' ></div>
+			<div  class='col-sm-3' align="middle">  
+					<h4><a href =#" onclick="goBack()">Go Back</a></h4>
+			</div>
+		</div>
+		<hr>
+		
+		{% if author == None and id == None and keyword == None %}	
+		<form action="/search/" method="get">
+
+			<div class='row' >		
+				<div class='col-sm-3'>    
+					<label>Title or Keyword</label>
+							{{form.title_search}}
+				</div>
+				<div class='col-sm-3'>    
+					<label>Author (e.g. "Ghose, A")</label>
+						{{form.author_search}}
+				</div>
+				<div class='col-sm-3' align="middle"><table><tr>
+					<td>
+						<div class="checkbox">
+						  <label>{{form.MISQ}}MISQ</label>
+						</div>
+						<div class="checkbox">
+						  <label>{{form.ISR}}ISR</label>
+						</div>
+						<div class="checkbox ">
+						  <label>{{form.JMIS}}JMIS</label>
+						</div>
+					</td>
+					<td style="padding-left:40px">
+						<div class="checkbox ">
+						  <label>{{form.JAIS}}JAIS</label>
+						</div>
+						<div class="checkbox">
+						  <label>{{form.JSIS}}JSIS</label>
+						</div>
+						<div class="checkbox">
+						  <label>{{form.ISJ}}ISJ</label>
+						</div>
+					</td>
+					<td style="padding-left:40">
+						<div class="checkbox ">
+						  <label>{{form.JIT}}JIT</label>
+						</div>
+						<div class="checkbox ">
+						  <label>{{form.EJIS}}EJIS</label>
+						</div>
+					</td>
+				</tr></table></div>
+				<div class='col-sm-3' align="middle">	
+					<button type="submit"  class="btn btn-default">Find Articles</button>			
+				</div>
+			</div>
+		</form>	
+		<h4> Search results for "<i>{{form.title_search.value}}</i> , <i>{{form.author_search.value}}</i>"</h4>
+		<hr>
+		{% endif %}
+
+		{% if author %}	
+		<h3> Articles authored by "<i>{{author}}</i>"</h3>
+		<hr>
+		{% endif %}
+		
+		<table id="table_id" class="display">
+			<THEAD> 
+				<tr> 
+					<th>Paper Title </th>
+					<th>Authors	</th>	
+					<th>Keywords (first 3)</th>	
+					<th>Journal	</th>						
+					<th>Year	</th>						
+					<th>Cited (ISI)	</th>						
+				</tr>
+			</THEAD>
+			<TBODY> 
+				{% for paper in papers %}
+					<tr> 		
+					<td class="title" style="width:40%"> <a href="/title/?id={{ paper.id }}&tab=abs" class="title">{{ paper.title }}</td>
+					<td class="authors">{{paper.authors}}</td>
+					<td class="keywords">{{paper.keywords}}</td>
+					<td> <p>{{paper.source}}<p></td>
+					<td > <p>{{paper.year}}<p></td>
+					<td > <p>{{paper.cite}}<p></td>
+					</tr>
+				{% endfor %}
+			</TBODY> 
+		</table>
+		<hr>
+		{% if id %}	
+			{% if tab == "abs" %}
+				<ul class="nav nav-tabs">
+					<li role="presentation" class="active"><a href="/title/?id={{ id }}&tab=abs">Abstract</a></li>
+					<li role="presentation"><a href="/title/?id={{ id }}&tab=ref">References</a></li>
+					<li role="presentation"><a href="/title/?id={{ id }}&tab=ref">Citation</a></li>					
+					<li role="presentation"><a href="/title/?id={{ id }}&tab=sim">Similar Articles</a></li>
+				</ul>
+				<div class='col-md-12'> 
+					<p></p>				
+					<p class="abstract"> {{papers.0.abstract}} </p>
+					<p class="abstract"> <b>Keywords</b>: {{papers.0.keywords}} </p>
+				</div>
+				<hr>
+			{% endif%}
+			{% if tab == "ref" %}	
+				<ul class="nav nav-tabs">
+					<li role="presentation" ><a href="/title/?id={{ id }}&tab=abs">Abstract</a></li>
+					<li role="presentation" class="active"><a href="/title/?id={{ id }}&tab=ref">References</a></li>
+					<li role="presentation"><a href="/title/?id={{ id }}&tab=ref">Citation</a></li>										
+					<li role="presentation"><a href="/title/?id={{ id }}&tab=sim">Similar Articles</a></li>
+				</ul>
+				<div class='col-md-12'> 
+					<h3>References in this collection:</h3>					
+					<ul class="references">
+					{% for ref in ref_papers %}
+					<li><a href="/title/?id= {{ref.id}}&tab=abs">{{ref.title}}</a> , {{ref.year}}, {{ref.source}}</li>
+					{% endfor %}
+					</ul>
+					<hr>
+				</div>
+			{% endif%}
+			{% if tab == "cite" %}	
+				<ul class="nav nav-tabs">
+					<li role="presentation" ><a href="/title/?id={{ id }}&tab=abs">Abstract</a></li>
+					<li role="presentation" ><a href="/title/?id={{ id }}&tab=ref">References</a></li>
+					<li role="presentation" class="active"><a href="/title/?id={{ id }}&tab=ref">Citation</a></li>									
+					<li role="presentation"><a href="/title/?id={{ id }}&tab=sim">Similar Articles</a></li>
+				</ul>
+				<div class='col-md-12'> 
+					<h3>References in this collection:</h3>					
+					<ul class="references">
+					{% for ref in ref_papers %}
+					<li><a href="/title/?id= {{ref.id}}&tab=abs">{{ref.title}}</a> , {{ref.year}}, {{ref.source}}</li>
+					{% endfor %}
+					</ul>
+					<hr>
+				</div>
+			{% endif%}			
+			{% if tab == "sim" %}	
+				<ul class="nav nav-tabs">
+					<li role="presentation" ><a href="/title/?id={{ id }}&tab=abs">Abstract</a></li>
+					<li role="presentation" ><a href="/title/?id={{ id }}&tab=ref">References</a></li>
+					<li role="presentation" class="active"><a href="/title/?id={{ id }}&tab=sim">Similar Articles</a></li>
+				</ul>
+				<p></p>				
+				<table id="table_id2" class="display">
+					<THEAD> 
+						<tr> 
+							<th>Paper Title </th>
+							<th>Authors	</th>	
+							<th>Keywords (first 3)</th>	
+							<th>Journal	</th>						
+							<th>Year	</th>						
+							<th>Cited (ISI)	</th>
+							<th>LSA</th>						
+							
+						</tr>
+					</THEAD>
+					<TBODY> 
+						{% for paper,sim in papers_sims %}
+							<tr> 		
+							<td class="title" style="width:40%"> <a href="/title/?id={{ paper.id }}&tab=abs" class="title">{{ paper.title }}</td>
+							<td class="authors">{{paper.authors}}</td>
+							<td class="keywords">{{paper.keywords}}</td>
+							<td> <p>{{paper.source}}<p></td>
+							<td> <p>{{paper.year}}<p></td>
+							<td> <p>{{paper.cite}}<p></td>
+							<td > <p>{{sim}}<p></td>
+							</tr>
+						{% endfor %}
+					</TBODY> 
+				</table>
+			{% endif%}			
+		{% endif %}
+
+		{% if author %}	
+			<div class="row">		
+			<h3> Author</h3>
+				<h4>
+				<a href="/author/?author={{author}}">{{author}}</a>
+				</h4>
+			<h3> Co-Authors</h3>
+			{% for a in coauthors_unique %}
+				<h4><a href="/author/?author={{a.0}}">{{a.0}}</a>, {{a.1}} time(s)</h4>
+			{% endfor %}
+			
+			</div>			
+		{% endif %}	
+		{% if keyword %}	
+			<hr>
+			<div class="row">		
+			<h3> Keyword</h3>
+				<h4>
+				<a href="/keyword/?keyword={{keyword}}">{{keyword}}</a>
+				</h4>
+			<h3> Keyword Co-occurrence</h3>
+			{% for a in cokeywords_unique %}
+				<h4><a href="/keyword/?keyword={{a.0}}">{{a.0}}</a>, {{a.1}} time(s)</h4>
+			{% endfor %}
+			
+			</div>			
+		{% endif %}		
+	</div>
+
+</body>
+</html>
