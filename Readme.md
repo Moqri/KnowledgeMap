@@ -2,7 +2,7 @@
 ('J CONSUM RES', 'J MARKETING RES','J CONSUM PSYCHOL', 'J MARKETING', 'MARKET SCI')
 
 ### The numbers in prenthesis show how many time each word/term has been used in the title
-( The words are stemmed to increase the accuracy of semantice analysis)
+( The words are stemmed to improve semantice analysis)
 ![GitHub Logo](marketing_example/marketing.png)
 
 
