@@ -5,7 +5,7 @@
 ( The words are stemmed to improve semantice analysis)
 ![Key words and terms] (marketing_example/marketing.png)
 Labels manually chosen based on key words/terms (can be imprved by experts)
-![Clusters labels] (marketing_example/labels.png)
+![Clusters labels] (marketing_example/label.png)
 ![Clusters network] (marketing_example/marketing_net.png)
 
 
