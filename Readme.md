@@ -4,7 +4,8 @@
 ### The numbers in prenthesis show how many time each word/term has been used in the title
 ( The words are stemmed to improve semantice analysis)
 ![Key words and terms] (marketing_example/marketing.png)
-Labels manually chosen based on key words/terms (can be imprved by experts)
+
+### Following labels are manually chosen based on the above key words/terms (can be imprved by experts)
 ![Clusters labels] (marketing_example/label.png)
 ![Clusters network] (marketing_example/marketing_net.png)
 
