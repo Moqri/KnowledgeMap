@@ -2,7 +2,7 @@
 ('J CONSUM RES', 'J MARKETING RES','J CONSUM PSYCHOL', 'J MARKETING', 'MARKET SCI')
 
 ### Multi-dimentional Scaling
-![Papers] (marketing_example/mds.png)
+![Papers] (marketing_example/papers.png)
 
 ### The numbers in prenthesis show how many time each word/term has been used in the title
 ( The words are stemmed to improve semantice analysis)
